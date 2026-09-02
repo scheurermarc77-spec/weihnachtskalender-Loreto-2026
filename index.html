@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adventskalender Oberstufe Loreto 2026</title>
+<style>
+:root {
+  --bg1:#10243a; --bg2:#183f5e; --gold:#f2c14e; --red:#b94141;
+  --cream:#fff7e8; --card:#f6ead3; --green:#2b5c4d;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; font-family:Segoe UI,Arial,sans-serif; color:white;
+  min-height:100vh; overflow-x:hidden;
+  background:radial-gradient(circle at top,#2a5876 0,#17334d 35%,#0c1c2d 100%);
+}
+.snow{position:fixed;inset:0;pointer-events:none;opacity:.4;background-image:
+radial-gradient(circle,#fff 1.2px,transparent 1.4px),
+radial-gradient(circle,#fff 1px,transparent 1.2px);
+background-size:50px 50px,70px 70px;background-position:0 0,20px 30px;animation:fall 15s linear infinite;}
+@keyframes fall{to{background-position:0 500px,20px 730px}}
+header{text-align:center;padding:34px 18px 16px}
+header h1{margin:0;font-size:clamp(30px,5vw,58px);letter-spacing:.5px}
+header p{margin:10px auto 0;max-width:760px;color:#e7edf3;font-size:18px}
+.badge{display:inline-block;margin-top:14px;padding:8px 14px;border:1px solid #ffffff55;border-radius:999px;background:#ffffff13}
+.calendar{max-width:1200px;margin:20px auto 60px;padding:18px;display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.door{position:relative;min-height:145px;border:0;border-radius:16px;padding:0;cursor:pointer;perspective:900px;background:transparent}
+.door:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.front,.inside{position:absolute;inset:0;border-radius:16px;display:flex;align-items:center;justify-content:center;transition:.7s cubic-bezier(.2,.75,.2,1);box-shadow:0 8px 20px #0005;backface-visibility:hidden}
+.front{background:linear-gradient(145deg,#c34a47,#8f252b);border:2px solid #f1c86c;transform-origin:left center}
+.front:after{content:"";position:absolute;right:12px;width:8px;height:8px;border-radius:50%;background:#ffd36b;box-shadow:0 0 0 3px #8c6126}
+.num{font-size:44px;font-weight:800;text-shadow:0 2px 8px #0006}
+.inside{background:linear-gradient(145deg,#fff8e9,#ead6b2);color:#17304a;font-size:48px}
+.door.open .front{transform:rotateY(-105deg);filter:brightness(.92)}
+.door.locked{cursor:not-allowed;filter:saturate(.65) brightness(.85)}
+.door.locked .front:before{content:"🔒";position:absolute;top:10px;left:12px;font-size:18px}
+.door.opened .front:before{content:"✓";position:absolute;top:9px;left:12px;font-size:21px;color:#dfffe9}
+footer{text-align:center;color:#d9e3ea;padding:0 20px 34px}
+.modal{position:fixed;inset:0;background:#06111dcc;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}
+.modal.show{display:flex}
+.card{width:min(650px,95vw);background:#fff9ed;color:#143049;border-radius:24px;padding:28px;text-align:center;box-shadow:0 25px 80px #0009;position:relative}
+.card .big{font-size:74px}
+.card h2{font-size:34px;margin:8px 0 12px}
+.card p{font-size:20px;line-height:1.5}
+.close{position:absolute;right:14px;top:12px;border:0;background:#173a55;color:white;border-radius:50%;width:38px;height:38px;font-size:22px;cursor:pointer}
+.small{font-size:14px;opacity:.75;margin-top:16px}
+.admin{position:fixed;left:14px;bottom:14px;background:#ffffff16;border:1px solid #ffffff3d;color:white;border-radius:10px;padding:8px 10px;font-size:12px;cursor:pointer}
+@media(max-width:950px){.calendar{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:620px){.calendar{grid-template-columns:repeat(3,1fr);gap:9px;padding:10px}.door{min-height:110px}.num{font-size:34px}}
+</style>
+</head>
+<body>
+<div class="snow"></div>
+<header>
+  <h1>🎄 Adventskalender 2026 🎄</h1>
+  <p>Für die Mitarbeitenden der Oberstufe Loreto. Jeden Tag wartet hinter einem neuen Törchen eine kleine Überraschung.</p>
+  <div class="badge" id="status">Bereit für den Advent.</div>
+</header>
+<main class="calendar" id="calendar"></main>
+<footer>Oberstufe Loreto · Advent 2026</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+ <div class="card">
+  <button class="close" id="close">×</button>
+  <div class="big" id="mIcon">🎁</div>
+  <h2 id="mTitle"></h2>
+  <p id="mText"></p>
+  <div class="small" id="mDay"></div>
+ </div>
+</div>
+
+<button class="admin" id="demoBtn" title="Nur zum Testen">Demo-Modus</button>
+
+<script>
+const items = [{"day": 1, "title": "Kaffee-Start", "text": "Heute gibt es für alle Mitarbeitenden einen Kaffee oder Tee aufs Haus.", "icon": "☕", "sound": "warm"}, {"day": 2, "title": "Süsse Pause", "text": "Im Teamzimmer wartet eine kleine Schokoladenüberraschung.", "icon": "🍫", "sound": "sparkle"}, {"day": 3, "title": "Kompliment-Tag", "text": "Mach heute einer Kollegin oder einem Kollegen ein ehrliches Kompliment.", "icon": "💬", "sound": "chime"}, {"day": 4, "title": "Znüni-Überraschung", "text": "Ein kleiner gemeinsamer Znüni steht bereit.", "icon": "🥐", "sound": "warm"}, {"day": 5, "title": "Musikmoment", "text": "Heute gibt es einen weihnachtlichen Song-Tipp für die Pause.", "icon": "🎵", "sound": "chime"}, {"day": 6, "title": "Samichlaus", "text": "Eine kleine Samichlaus-Überraschung wartet auf euch.", "icon": "🎅", "sound": "bells"}, {"day": 7, "title": "Mini-Auszeit", "text": "Gönn dir heute bewusst 10 Minuten Pause ohne Bildschirm.", "icon": "🫖", "sound": "soft"}, {"day": 8, "title": "Danke!", "text": "Heute sagen wir Danke für euren täglichen Einsatz für unsere Schülerinnen und Schüler.", "icon": "❤️", "sound": "warm"}, {"day": 9, "title": "Rätsel des Tages", "text": "Ein kleines Weihnachtsrätsel wartet auf das Team. Die Lösung gibt es morgen.", "icon": "🧩", "sound": "sparkle"}, {"day": 10, "title": "Fruchtige Energie", "text": "Im Teamzimmer gibt es heute etwas Frisches und Gesundes.", "icon": "🍊", "sound": "soft"}, {"day": 11, "title": "Teamfoto-Moment", "text": "Zeit für ein spontanes, lustiges Adventsfoto mit Kolleginnen und Kollegen.", "icon": "📸", "sound": "click"}, {"day": 12, "title": "Halbzeit!", "text": "Halbzeit bis Weihnachten: Heute gibt es eine kleine süsse Belohnung.", "icon": "⭐", "sound": "bells"}, {"day": 13, "title": "Glückslos", "text": "Zieh heute ein Los. Vielleicht wartet eine kleine Überraschung auf dich.", "icon": "🎟️", "sound": "sparkle"}, {"day": 14, "title": "Heisser Punsch", "text": "Heute wartet ein alkoholfreier Winterpunsch oder Tee auf euch.", "icon": "🍵", "sound": "warm"}, {"day": 15, "title": "Lachpause", "text": "Heute gibt es einen kurzen Weihnachtswitz fürs Team.", "icon": "😄", "sound": "pop"}, {"day": 16, "title": "Wunschzettel", "text": "Schreib einen kleinen Wunsch oder eine Idee fürs Loreto auf den gemeinsamen Wunschzettel.", "icon": "📝", "sound": "soft"}, {"day": 17, "title": "Guetzli-Tag", "text": "Heute stehen Guetzli für die gemeinsame Pause bereit.", "icon": "🍪", "sound": "bells"}, {"day": 18, "title": "Lieblingsmoment", "text": "Teile mit jemandem deinen schönsten Loreto-Moment des Jahres.", "icon": "✨", "sound": "chime"}, {"day": 19, "title": "Wochenendgruss", "text": "Eine kleine Botschaft zum Durchatmen und Abschalten fürs Wochenende.", "icon": "❄️", "sound": "soft"}, {"day": 20, "title": "Winterlicher Tipp", "text": "Heute gibt es einen kleinen Ausflugs- oder Genuss-Tipp für die Weihnachtszeit.", "icon": "🏔️", "sound": "sparkle"}, {"day": 21, "title": "Dankeskarte", "text": "Zieh einen Namen und schreib dieser Person eine kurze Dankesbotschaft.", "icon": "💌", "sound": "chime"}, {"day": 22, "title": "Energie für den Endspurt", "text": "Heute wartet ein kleiner Snack für die letzten Schultage.", "icon": "🥜", "sound": "pop"}, {"day": 23, "title": "Weihnachtsgruss", "text": "Ein persönlicher Weihnachtsgruss der Schulleitung an das ganze Team.", "icon": "🎄", "sound": "bells"}, {"day": 24, "title": "Frohe Weihnachten!", "text": "Danke für euren grossen Einsatz. Wir wünschen euch erholsame Festtage und einen guten Start ins neue Jahr.", "icon": "🎁", "sound": "grand"}];
+const cal = document.getElementById('calendar');
+const modal = document.getElementById('modal');
+const statusEl = document.getElementById('status');
+let demo = false;
+
+function todayInfo(){
+ const n = new Date();
+ return {year:n.getFullYear(), month:n.getMonth()+1, day:n.getDate()};
+}
+function allowed(day){
+ if(demo) return true;
+ const t=todayInfo();
+ if(t.year>2026) return true;
+ if(t.year<2026) return false;
+ if(t.month>12) return true;
+ if(t.month<12) return false;
+ return day<=t.day;
+}
+function audio(kind){
+ const A=window.AudioContext||window.webkitAudioContext;
+ const ctx=new A();
+ const now=ctx.currentTime;
+ const presets={
+  warm:[[392,.0,.18],[523,.18,.2],[659,.38,.25]],
+  sparkle:[[784,0,.08],[1047,.09,.08],[1319,.18,.13]],
+  chime:[[523,0,.16],[659,.14,.16],[784,.28,.28]],
+  bells:[[659,0,.11],[784,.12,.11],[988,.24,.12],[1319,.38,.32]],
+  soft:[[330,0,.18],[392,.2,.22]],
+  click:[[900,0,.04],[500,.05,.05]],
+  pop:[[440,0,.06],[660,.07,.09]],
+  grand:[[523,0,.18],[659,.16,.18],[784,.32,.18],[1047,.5,.45]]
+ };
+ (presets[kind]||presets.chime).forEach(([f,s,d])=>{
+   const o=ctx.createOscillator(), g=ctx.createGain();
+   o.type='sine'; o.frequency.value=f;
+   g.gain.setValueAtTime(0.0001,now+s);
+   g.gain.exponentialRampToValueAtTime(.18,now+s+.015);
+   g.gain.exponentialRampToValueAtTime(.0001,now+s+d);
+   o.connect(g); g.connect(ctx.destination); o.start(now+s); o.stop(now+s+d+.03);
+ });
+}
+
+function render(){
+ cal.innerHTML='';
+ items.forEach(it=>{
+   const b=document.createElement('button');
+   b.className='door '+(allowed(it.day)?'':'locked');
+   b.setAttribute('aria-label','Törchen '+it.day);
+   b.innerHTML=`<div class="inside">${it.icon}</div><div class="front"><div class="num">${it.day}</div></div>`;
+   if(localStorage.getItem('loreto_advent_'+it.day)==='1') b.classList.add('opened');
+   b.onclick=()=>{
+     if(!allowed(it.day)){
+       statusEl.textContent='Dieses Törchen darf erst am '+it.day+'. Dezember 2026 geöffnet werden.';
+       audio('click'); return;
+     }
+     b.classList.add('open','opened');
+     localStorage.setItem('loreto_advent_'+it.day,'1');
+     audio(it.sound);
+     setTimeout(()=>show(it),520);
+   };
+   cal.appendChild(b);
+ });
+ const t=todayInfo();
+ if(demo) statusEl.textContent='Demo-Modus aktiv: Alle Törchen können geöffnet werden.';
+ else if(t.year===2026 && t.month===12 && t.day<=24) statusEl.textContent='Heute ist der '+t.day+'. Dezember. Törchen '+t.day+' ist bereit.';
+ else if(t.year===2026 && t.month<12) statusEl.textContent='Der Adventskalender startet am 1. Dezember 2026.';
+ else statusEl.textContent='Willkommen beim Adventskalender 2026.';
+}
+function show(it){
+ document.getElementById('mIcon').textContent=it.icon;
+ document.getElementById('mTitle').textContent=it.title;
+ document.getElementById('mText').textContent=it.text;
+ document.getElementById('mDay').textContent=it.day+'. Dezember 2026';
+ modal.classList.add('show');
+}
+document.getElementById('close').onclick=()=>modal.classList.remove('show');
+modal.onclick=e=>{if(e.target===modal) modal.classList.remove('show')};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('show')});
+document.getElementById('demoBtn').onclick=()=>{demo=!demo; render();};
+render();
+</script>
+</body>
+</html>
