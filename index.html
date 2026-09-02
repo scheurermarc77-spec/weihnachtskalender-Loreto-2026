@@ -1,158 +1,306 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adventskalender Oberstufe Loreto 2026</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10283a">
+<title>Advent im Loreto 2026</title>
 <style>
 :root {
-  --bg1:#10243a; --bg2:#183f5e; --gold:#f2c14e; --red:#b94141;
-  --cream:#fff7e8; --card:#f6ead3; --green:#2b5c4d;
+  --night:#071622;
+  --night2:#12344a;
+  --gold:#e7bd66;
+  --gold2:#f7e3ad;
+  --red:#9e2f35;
+  --red2:#c84a4e;
+  --cream:#fff8eb;
+  --ink:#17354a;
 }
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
-  margin:0; font-family:Segoe UI,Arial,sans-serif; color:white;
-  min-height:100vh; overflow-x:hidden;
-  background:radial-gradient(circle at top,#2a5876 0,#17334d 35%,#0c1c2d 100%);
+  margin:0;
+  min-height:100vh;
+  font-family:"Segoe UI",Arial,sans-serif;
+  background:linear-gradient(180deg,#081822,#102d40 55%,#0a1b28);
+  color:white;
 }
-.snow{position:fixed;inset:0;pointer-events:none;opacity:.4;background-image:
-radial-gradient(circle,#fff 1.2px,transparent 1.4px),
-radial-gradient(circle,#fff 1px,transparent 1.2px);
-background-size:50px 50px,70px 70px;background-position:0 0,20px 30px;animation:fall 15s linear infinite;}
-@keyframes fall{to{background-position:0 500px,20px 730px}}
-header{text-align:center;padding:34px 18px 16px}
-header h1{margin:0;font-size:clamp(30px,5vw,58px);letter-spacing:.5px}
-header p{margin:10px auto 0;max-width:760px;color:#e7edf3;font-size:18px}
-.badge{display:inline-block;margin-top:14px;padding:8px 14px;border:1px solid #ffffff55;border-radius:999px;background:#ffffff13}
-.calendar{max-width:1200px;margin:20px auto 60px;padding:18px;display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
-.door{position:relative;min-height:145px;border:0;border-radius:16px;padding:0;cursor:pointer;perspective:900px;background:transparent}
-.door:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
-.front,.inside{position:absolute;inset:0;border-radius:16px;display:flex;align-items:center;justify-content:center;transition:.7s cubic-bezier(.2,.75,.2,1);box-shadow:0 8px 20px #0005;backface-visibility:hidden}
-.front{background:linear-gradient(145deg,#c34a47,#8f252b);border:2px solid #f1c86c;transform-origin:left center}
-.front:after{content:"";position:absolute;right:12px;width:8px;height:8px;border-radius:50%;background:#ffd36b;box-shadow:0 0 0 3px #8c6126}
-.num{font-size:44px;font-weight:800;text-shadow:0 2px 8px #0006}
-.inside{background:linear-gradient(145deg,#fff8e9,#ead6b2);color:#17304a;font-size:48px}
-.door.open .front{transform:rotateY(-105deg);filter:brightness(.92)}
-.door.locked{cursor:not-allowed;filter:saturate(.65) brightness(.85)}
-.door.locked .front:before{content:"🔒";position:absolute;top:10px;left:12px;font-size:18px}
-.door.opened .front:before{content:"✓";position:absolute;top:9px;left:12px;font-size:21px;color:#dfffe9}
-footer{text-align:center;color:#d9e3ea;padding:0 20px 34px}
-.modal{position:fixed;inset:0;background:#06111dcc;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}
+.hero{
+  position:relative;
+  min-height:62vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  overflow:hidden;
+  background:
+    linear-gradient(180deg,rgba(4,15,23,.08),rgba(4,15,23,.32) 35%,rgba(4,15,23,.92)),
+    url("https://api.i-web.ch/public/guest/getImageString/s46/ebc5754204bea6f60e1bbf1a6689487f/600/0/6944175cebf77/") center 46%/cover no-repeat,
+    linear-gradient(135deg,#274c61,#10283a);
+}
+.hero:after{
+  content:"";
+  position:absolute;inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle at 50% 0,rgba(255,240,190,.18),transparent 36%);
+}
+.hero-inner{
+  position:relative;z-index:3;
+  max-width:1180px;width:100%;
+  margin:0 auto;padding:48px 24px 30px;
+}
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 13px;border:1px solid #ffffff55;
+  border-radius:999px;background:#071a26aa;
+  backdrop-filter:blur(8px);
+  font-size:14px;letter-spacing:.04em;text-transform:uppercase;
+}
+h1{font-size:clamp(40px,7vw,82px);line-height:.96;margin:16px 0 12px;max-width:900px;text-shadow:0 6px 28px #0009}
+.lead{font-size:clamp(17px,2.2vw,22px);max-width:760px;line-height:1.5;color:#f7f4ed;margin:0}
+.status{display:inline-block;margin-top:18px;background:#fff8e9;color:#17384b;border-radius:12px;padding:10px 14px;font-weight:700;box-shadow:0 8px 30px #0004}
+.snow{position:fixed;inset:0;pointer-events:none;z-index:20;overflow:hidden}
+.flake{position:absolute;top:-40px;color:white;opacity:.75;animation:fall linear infinite;text-shadow:0 0 8px white}
+@keyframes fall{to{transform:translate3d(30px,110vh,0) rotate(360deg)}}
+
+.main{max-width:1180px;margin:0 auto;padding:28px 20px 70px}
+.intro{display:flex;justify-content:space-between;gap:20px;align-items:end;margin:10px 0 18px}
+.intro h2{font-size:clamp(27px,4vw,42px);margin:0}
+.intro p{margin:0;color:#cfdae0;max-width:620px;line-height:1.5}
+.calendar{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.door{
+  position:relative;min-height:154px;border:0;background:none;padding:0;
+  perspective:1000px;cursor:pointer;border-radius:17px;
+}
+.panel,.inside{
+  position:absolute;inset:0;border-radius:17px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 28px #0006;
+}
+.inside{
+  overflow:hidden;
+  background:
+    linear-gradient(145deg,rgba(255,248,230,.88),rgba(231,189,102,.76)),
+    url("https://api.i-web.ch/public/guest/getImageString/s46/77486a000c69c094b3d2dfb2f070ad4e/0/0/63b9ab4dbf116/") center/cover no-repeat;
+  color:#143449;font-size:55px;border:1px solid #f5d88a;
+}
+.panel{
+  transform-origin:left center;
+  transition:transform .72s cubic-bezier(.2,.78,.25,1),filter .5s;
+  background:
+    linear-gradient(145deg,rgba(189,65,66,.95),rgba(111,28,37,.97)),
+    url("https://api.i-web.ch/public/guest/getImageString/s46/d0b72325db59ff4833e0c1193e6a6c2d/0/0/211678777eeaa/") center/cover no-repeat;
+  border:2px solid #e9c675;
+  overflow:hidden;
+}
+.panel:before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.07),rgba(0,0,0,.18));
+}
+.panel:after{
+  content:"";position:absolute;right:12px;width:9px;height:9px;border-radius:50%;
+  background:#f5d479;box-shadow:0 0 0 3px #6b431c;
+}
+.number{position:relative;z-index:2;font-size:46px;font-weight:800;text-shadow:0 3px 10px #0008}
+.door.open .panel{transform:rotateY(-108deg);filter:brightness(.85)}
+.door.locked{cursor:not-allowed;filter:saturate(.45) brightness(.78)}
+.door.locked .panel:before{content:"🔒";font-size:18px;padding:10px;display:flex;align-items:flex-start}
+.door.opened:not(.open) .panel:before{content:"✓";font-size:22px;color:#eaffef;padding:9px;display:flex;align-items:flex-start}
+.door:hover:not(.locked) .panel{filter:brightness(1.08)}
+
+.loreto-strip{margin-top:48px;padding-top:28px;border-top:1px solid #ffffff22}
+.loreto-strip h3{font-size:28px;margin:0 0 15px}
+.gallery{display:grid;grid-template-columns:1.45fr 1fr 1fr;gap:12px}
+.photo{min-height:220px;border-radius:18px;background-size:cover;background-position:center;box-shadow:0 12px 32px #0006;position:relative;overflow:hidden}
+.photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(5,19,28,.75))}
+.photo span{position:absolute;left:15px;bottom:12px;z-index:2;font-weight:700}
+.source-note{font-size:12px;color:#9eb0bc;line-height:1.45;margin-top:10px}
+
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:18px;background:#030b11d9;z-index:40}
 .modal.show{display:flex}
-.card{width:min(650px,95vw);background:#fff9ed;color:#143049;border-radius:24px;padding:28px;text-align:center;box-shadow:0 25px 80px #0009;position:relative}
-.card .big{font-size:74px}
-.card h2{font-size:34px;margin:8px 0 12px}
-.card p{font-size:20px;line-height:1.5}
-.close{position:absolute;right:14px;top:12px;border:0;background:#173a55;color:white;border-radius:50%;width:38px;height:38px;font-size:22px;cursor:pointer}
-.small{font-size:14px;opacity:.75;margin-top:16px}
-.admin{position:fixed;left:14px;bottom:14px;background:#ffffff16;border:1px solid #ffffff3d;color:white;border-radius:10px;padding:8px 10px;font-size:12px;cursor:pointer}
-@media(max-width:950px){.calendar{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:620px){.calendar{grid-template-columns:repeat(3,1fr);gap:9px;padding:10px}.door{min-height:110px}.num{font-size:34px}}
+.card{width:min(670px,96vw);background:#fff8eb;color:#17354a;border-radius:25px;padding:32px 30px 28px;text-align:center;box-shadow:0 30px 100px #000b;position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;inset:0 0 auto;height:8px;background:linear-gradient(90deg,#9e2f35,#e7bd66,#315d53)}
+.close{position:absolute;right:14px;top:14px;width:40px;height:40px;border:0;border-radius:50%;background:#15394e;color:white;font-size:23px;cursor:pointer}
+.bigicon{font-size:76px;margin-top:7px}
+.card h2{font-size:clamp(30px,5vw,42px);margin:7px 0 10px}
+.card p{font-size:20px;line-height:1.55;margin:0 auto;max-width:560px}
+.daylabel{margin-top:20px;font-weight:700;color:#7b4e26}
+
+.toolbar{position:fixed;left:12px;bottom:12px;z-index:35;display:flex;gap:7px}
+.tool{border:1px solid #ffffff45;background:#061925d9;color:white;border-radius:10px;padding:8px 10px;font-size:12px;cursor:pointer;backdrop-filter:blur(5px)}
+
+@media(max-width:950px){.calendar{grid-template-columns:repeat(4,1fr)}.gallery{grid-template-columns:1fr 1fr}.gallery .photo:first-child{grid-column:1/-1}}
+@media(max-width:650px){
+  .hero{min-height:54vh}
+  .hero-inner{padding:42px 16px 24px}
+  .main{padding:22px 10px 65px}
+  .intro{display:block;padding:0 4px} .intro p{margin-top:8px}
+  .calendar{grid-template-columns:repeat(3,1fr);gap:8px}
+  .door{min-height:112px} .number{font-size:34px}
+  .gallery{grid-template-columns:1fr} .gallery .photo:first-child{grid-column:auto}
+  .photo{min-height:190px}
+}
 </style>
 </head>
 <body>
-<div class="snow"></div>
-<header>
-  <h1>🎄 Adventskalender 2026 🎄</h1>
-  <p>Für die Mitarbeitenden der Oberstufe Loreto. Jeden Tag wartet hinter einem neuen Törchen eine kleine Überraschung.</p>
-  <div class="badge" id="status">Bereit für den Advent.</div>
-</header>
-<main class="calendar" id="calendar"></main>
-<footer>Oberstufe Loreto · Advent 2026</footer>
 
-<div class="modal" id="modal" role="dialog" aria-modal="true">
- <div class="card">
-  <button class="close" id="close">×</button>
-  <div class="big" id="mIcon">🎁</div>
-  <h2 id="mTitle"></h2>
-  <p id="mText"></p>
-  <div class="small" id="mDay"></div>
- </div>
+<div class="snow" id="snow"></div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="kicker">❄️ Oberstufe Loreto · Advent 2026</div>
+    <h1>Weihnachten im Loreto</h1>
+    <p class="lead">Vom 1. bis 24. Dezember wartet jeden Tag eine kleine Überraschung auf die Mitarbeitenden der Oberstufe Loreto.</p>
+    <div class="status" id="status">Der Adventskalender ist bereit.</div>
+  </div>
+</section>
+
+<main class="main">
+  <div class="intro">
+    <h2>24 Törchen. 24 kleine Momente.</h2>
+    <p>Jedes Törchen wird am entsprechenden Dezembertag freigeschaltet. Bereits geöffnete Törchen bleiben auf diesem Gerät markiert.</p>
+  </div>
+
+  <section class="calendar" id="calendar" aria-label="Adventskalender"></section>
+
+  <section class="loreto-strip">
+    <h3>Unser Loreto im Advent</h3>
+    <div class="gallery">
+      <div class="photo" style="background-image:url('https://api.i-web.ch/public/guest/getImageString/s46/ebc5754204bea6f60e1bbf1a6689487f/600/0/6944175cebf77/')"><span>Oberstufe Loreto</span></div>
+      <div class="photo" style="background-image:url('https://api.i-web.ch/public/guest/getImageString/s46/77486a000c69c094b3d2dfb2f070ad4e/0/0/63b9ab4dbf116/')"><span>Ein vertrauter Ort</span></div>
+      <div class="photo" style="background-image:url('https://api.i-web.ch/public/guest/getImageString/s46/d0b72325db59ff4833e0c1193e6a6c2d/0/0/211678777eeaa/')"><span>Adventszeit im Schulhaus</span></div>
+    </div>
+    <div class="source-note">Die eingebundenen Loreto-Aufnahmen werden direkt von öffentlich zugänglichen Bildressourcen der offiziellen Website der Stadtschulen und Betreuung Zug geladen. Für eine dauerhaft unabhängige Veröffentlichung können später eigene freigegebene Loreto-Fotos lokal ins Projekt übernommen werden.</div>
+  </section>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="card">
+    <button class="close" id="close" aria-label="Schliessen">×</button>
+    <div class="bigicon" id="mIcon">🎁</div>
+    <h2 id="mTitle"></h2>
+    <p id="mText"></p>
+    <div class="daylabel" id="mDay"></div>
+  </div>
 </div>
 
-<button class="admin" id="demoBtn" title="Nur zum Testen">Demo-Modus</button>
+<div class="toolbar">
+  <button class="tool" id="demo">Demo-Modus</button>
+  <button class="tool" id="reset">Testdaten löschen</button>
+</div>
 
 <script>
-const items = [{"day": 1, "title": "Kaffee-Start", "text": "Heute gibt es für alle Mitarbeitenden einen Kaffee oder Tee aufs Haus.", "icon": "☕", "sound": "warm"}, {"day": 2, "title": "Süsse Pause", "text": "Im Teamzimmer wartet eine kleine Schokoladenüberraschung.", "icon": "🍫", "sound": "sparkle"}, {"day": 3, "title": "Kompliment-Tag", "text": "Mach heute einer Kollegin oder einem Kollegen ein ehrliches Kompliment.", "icon": "💬", "sound": "chime"}, {"day": 4, "title": "Znüni-Überraschung", "text": "Ein kleiner gemeinsamer Znüni steht bereit.", "icon": "🥐", "sound": "warm"}, {"day": 5, "title": "Musikmoment", "text": "Heute gibt es einen weihnachtlichen Song-Tipp für die Pause.", "icon": "🎵", "sound": "chime"}, {"day": 6, "title": "Samichlaus", "text": "Eine kleine Samichlaus-Überraschung wartet auf euch.", "icon": "🎅", "sound": "bells"}, {"day": 7, "title": "Mini-Auszeit", "text": "Gönn dir heute bewusst 10 Minuten Pause ohne Bildschirm.", "icon": "🫖", "sound": "soft"}, {"day": 8, "title": "Danke!", "text": "Heute sagen wir Danke für euren täglichen Einsatz für unsere Schülerinnen und Schüler.", "icon": "❤️", "sound": "warm"}, {"day": 9, "title": "Rätsel des Tages", "text": "Ein kleines Weihnachtsrätsel wartet auf das Team. Die Lösung gibt es morgen.", "icon": "🧩", "sound": "sparkle"}, {"day": 10, "title": "Fruchtige Energie", "text": "Im Teamzimmer gibt es heute etwas Frisches und Gesundes.", "icon": "🍊", "sound": "soft"}, {"day": 11, "title": "Teamfoto-Moment", "text": "Zeit für ein spontanes, lustiges Adventsfoto mit Kolleginnen und Kollegen.", "icon": "📸", "sound": "click"}, {"day": 12, "title": "Halbzeit!", "text": "Halbzeit bis Weihnachten: Heute gibt es eine kleine süsse Belohnung.", "icon": "⭐", "sound": "bells"}, {"day": 13, "title": "Glückslos", "text": "Zieh heute ein Los. Vielleicht wartet eine kleine Überraschung auf dich.", "icon": "🎟️", "sound": "sparkle"}, {"day": 14, "title": "Heisser Punsch", "text": "Heute wartet ein alkoholfreier Winterpunsch oder Tee auf euch.", "icon": "🍵", "sound": "warm"}, {"day": 15, "title": "Lachpause", "text": "Heute gibt es einen kurzen Weihnachtswitz fürs Team.", "icon": "😄", "sound": "pop"}, {"day": 16, "title": "Wunschzettel", "text": "Schreib einen kleinen Wunsch oder eine Idee fürs Loreto auf den gemeinsamen Wunschzettel.", "icon": "📝", "sound": "soft"}, {"day": 17, "title": "Guetzli-Tag", "text": "Heute stehen Guetzli für die gemeinsame Pause bereit.", "icon": "🍪", "sound": "bells"}, {"day": 18, "title": "Lieblingsmoment", "text": "Teile mit jemandem deinen schönsten Loreto-Moment des Jahres.", "icon": "✨", "sound": "chime"}, {"day": 19, "title": "Wochenendgruss", "text": "Eine kleine Botschaft zum Durchatmen und Abschalten fürs Wochenende.", "icon": "❄️", "sound": "soft"}, {"day": 20, "title": "Winterlicher Tipp", "text": "Heute gibt es einen kleinen Ausflugs- oder Genuss-Tipp für die Weihnachtszeit.", "icon": "🏔️", "sound": "sparkle"}, {"day": 21, "title": "Dankeskarte", "text": "Zieh einen Namen und schreib dieser Person eine kurze Dankesbotschaft.", "icon": "💌", "sound": "chime"}, {"day": 22, "title": "Energie für den Endspurt", "text": "Heute wartet ein kleiner Snack für die letzten Schultage.", "icon": "🥜", "sound": "pop"}, {"day": 23, "title": "Weihnachtsgruss", "text": "Ein persönlicher Weihnachtsgruss der Schulleitung an das ganze Team.", "icon": "🎄", "sound": "bells"}, {"day": 24, "title": "Frohe Weihnachten!", "text": "Danke für euren grossen Einsatz. Wir wünschen euch erholsame Festtage und einen guten Start ins neue Jahr.", "icon": "🎁", "sound": "grand"}];
-const cal = document.getElementById('calendar');
-const modal = document.getElementById('modal');
-const statusEl = document.getElementById('status');
-let demo = false;
+const surprises = [{"day": 1, "title": "Kaffee-Start", "text": "Heute gibt es für alle Mitarbeitenden einen Kaffee oder Tee aufs Haus.", "icon": "☕", "sound": "warm"}, {"day": 2, "title": "Süsse Pause", "text": "Im Teamzimmer wartet eine kleine Schokoladenüberraschung.", "icon": "🍫", "sound": "sparkle"}, {"day": 3, "title": "Kompliment-Tag", "text": "Mach heute einer Kollegin oder einem Kollegen ein ehrliches Kompliment.", "icon": "💬", "sound": "chime"}, {"day": 4, "title": "Znüni-Überraschung", "text": "Ein kleiner gemeinsamer Znüni steht bereit.", "icon": "🥐", "sound": "warm"}, {"day": 5, "title": "Musikmoment", "text": "Heute gibt es einen weihnachtlichen Song-Tipp für die Pause.", "icon": "🎵", "sound": "chime"}, {"day": 6, "title": "Samichlaus", "text": "Eine kleine Samichlaus-Überraschung wartet auf euch.", "icon": "🎅", "sound": "bells"}, {"day": 7, "title": "Mini-Auszeit", "text": "Gönn dir heute bewusst zehn Minuten Pause ohne Bildschirm.", "icon": "🫖", "sound": "soft"}, {"day": 8, "title": "Danke!", "text": "Heute sagen wir Danke für euren täglichen Einsatz für unsere Schülerinnen und Schüler.", "icon": "❤️", "sound": "warm"}, {"day": 9, "title": "Loreto-Rätsel", "text": "Heute wartet ein kleines Loreto-Weihnachtsrätsel auf das Team. Die Lösung gibt es morgen.", "icon": "🧩", "sound": "sparkle"}, {"day": 10, "title": "Fruchtige Energie", "text": "Im Teamzimmer gibt es heute etwas Frisches und Gesundes.", "icon": "🍊", "sound": "soft"}, {"day": 11, "title": "Teamfoto-Moment", "text": "Zeit für ein spontanes, lustiges Adventsfoto mit Kolleginnen und Kollegen.", "icon": "📸", "sound": "click"}, {"day": 12, "title": "Halbzeit!", "text": "Halbzeit bis Weihnachten: Heute gibt es eine kleine süsse Belohnung.", "icon": "⭐", "sound": "bells"}, {"day": 13, "title": "Glückslos", "text": "Zieh heute ein Los. Vielleicht wartet eine kleine Überraschung auf dich.", "icon": "🎟️", "sound": "sparkle"}, {"day": 14, "title": "Heisser Punsch", "text": "Heute wartet ein alkoholfreier Winterpunsch oder Tee auf euch.", "icon": "🍵", "sound": "warm"}, {"day": 15, "title": "Lachpause", "text": "Heute gibt es einen kurzen Weihnachtswitz fürs Team.", "icon": "😄", "sound": "pop"}, {"day": 16, "title": "Loreto-Wunschzettel", "text": "Schreib einen kleinen Wunsch oder eine Idee fürs Loreto auf den gemeinsamen Wunschzettel.", "icon": "📝", "sound": "soft"}, {"day": 17, "title": "Guetzli-Tag", "text": "Heute stehen Guetzli für die gemeinsame Pause bereit.", "icon": "🍪", "sound": "bells"}, {"day": 18, "title": "Lieblingsmoment", "text": "Teile mit jemandem deinen schönsten Loreto-Moment des Jahres.", "icon": "✨", "sound": "chime"}, {"day": 19, "title": "Wochenendgruss", "text": "Eine kleine Botschaft zum Durchatmen und Abschalten fürs Wochenende.", "icon": "❄️", "sound": "soft"}, {"day": 20, "title": "Winterlicher Tipp", "text": "Heute gibt es einen kleinen Ausflugs- oder Genuss-Tipp für die Weihnachtszeit.", "icon": "🏔️", "sound": "sparkle"}, {"day": 21, "title": "Dankeskarte", "text": "Zieh einen Namen und schreib dieser Person eine kurze Dankesbotschaft.", "icon": "💌", "sound": "chime"}, {"day": 22, "title": "Energie für den Endspurt", "text": "Heute wartet ein kleiner Snack für die letzten Schultage.", "icon": "🥜", "sound": "pop"}, {"day": 23, "title": "Weihnachtsgruss", "text": "Ein persönlicher Weihnachtsgruss der Schulleitung an das ganze Team.", "icon": "🎄", "sound": "bells"}, {"day": 24, "title": "Frohe Weihnachten!", "text": "Danke für euren grossen Einsatz. Wir wünschen euch erholsame Festtage und einen guten Start ins neue Jahr.", "icon": "🎁", "sound": "grand"}];
+let demoMode = false;
 
-function todayInfo(){
- const n = new Date();
- return {year:n.getFullYear(), month:n.getMonth()+1, day:n.getDate()};
+function nowInfo(){
+  const d = new Date();
+  return {year:d.getFullYear(), month:d.getMonth()+1, day:d.getDate()};
 }
-function allowed(day){
- if(demo) return true;
- const t=todayInfo();
- if(t.year>2026) return true;
- if(t.year<2026) return false;
- if(t.month>12) return true;
- if(t.month<12) return false;
- return day<=t.day;
+
+function canOpen(day){
+  if (demoMode) return true;
+  const t = nowInfo();
+  if (t.year > 2026) return true;
+  if (t.year < 2026) return false;
+  if (t.month > 12) return true;
+  if (t.month < 12) return false;
+  return day <= t.day;
 }
-function audio(kind){
- const A=window.AudioContext||window.webkitAudioContext;
- const ctx=new A();
- const now=ctx.currentTime;
- const presets={
-  warm:[[392,.0,.18],[523,.18,.2],[659,.38,.25]],
-  sparkle:[[784,0,.08],[1047,.09,.08],[1319,.18,.13]],
-  chime:[[523,0,.16],[659,.14,.16],[784,.28,.28]],
-  bells:[[659,0,.11],[784,.12,.11],[988,.24,.12],[1319,.38,.32]],
-  soft:[[330,0,.18],[392,.2,.22]],
-  click:[[900,0,.04],[500,.05,.05]],
-  pop:[[440,0,.06],[660,.07,.09]],
-  grand:[[523,0,.18],[659,.16,.18],[784,.32,.18],[1047,.5,.45]]
- };
- (presets[kind]||presets.chime).forEach(([f,s,d])=>{
-   const o=ctx.createOscillator(), g=ctx.createGain();
-   o.type='sine'; o.frequency.value=f;
-   g.gain.setValueAtTime(0.0001,now+s);
-   g.gain.exponentialRampToValueAtTime(.18,now+s+.015);
-   g.gain.exponentialRampToValueAtTime(.0001,now+s+d);
-   o.connect(g); g.connect(ctx.destination); o.start(now+s); o.stop(now+s+d+.03);
- });
+
+function playSound(type){
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioCtx();
+    const t = ctx.currentTime;
+    const sets = {
+      warm:[[392,0,.16],[523,.16,.18],[659,.34,.24]],
+      sparkle:[[784,0,.07],[1047,.08,.08],[1319,.17,.13]],
+      chime:[[523,0,.15],[659,.13,.15],[784,.27,.25]],
+      bells:[[659,0,.10],[784,.11,.10],[988,.23,.11],[1319,.36,.30]],
+      soft:[[330,0,.18],[392,.18,.22]],
+      click:[[850,0,.04],[480,.05,.05]],
+      pop:[[440,0,.05],[660,.06,.09]],
+      grand:[[523,0,.17],[659,.15,.17],[784,.30,.18],[1047,.49,.44]]
+    };
+    (sets[type]||sets.chime).forEach(([freq,start,dur])=>{
+      const osc=ctx.createOscillator(), gain=ctx.createGain();
+      osc.type="sine"; osc.frequency.value=freq;
+      gain.gain.setValueAtTime(.0001,t+start);
+      gain.gain.exponentialRampToValueAtTime(.17,t+start+.015);
+      gain.gain.exponentialRampToValueAtTime(.0001,t+start+dur);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(t+start); osc.stop(t+start+dur+.04);
+    });
+  } catch(e) {}
+}
+
+function openModal(item){
+  document.getElementById("mIcon").textContent=item.icon;
+  document.getElementById("mTitle").textContent=item.title;
+  document.getElementById("mText").textContent=item.text;
+  document.getElementById("mDay").textContent=item.day+". Dezember 2026";
+  document.getElementById("modal").classList.add("show");
 }
 
 function render(){
- cal.innerHTML='';
- items.forEach(it=>{
-   const b=document.createElement('button');
-   b.className='door '+(allowed(it.day)?'':'locked');
-   b.setAttribute('aria-label','Törchen '+it.day);
-   b.innerHTML=`<div class="inside">${it.icon}</div><div class="front"><div class="num">${it.day}</div></div>`;
-   if(localStorage.getItem('loreto_advent_'+it.day)==='1') b.classList.add('opened');
-   b.onclick=()=>{
-     if(!allowed(it.day)){
-       statusEl.textContent='Dieses Törchen darf erst am '+it.day+'. Dezember 2026 geöffnet werden.';
-       audio('click'); return;
-     }
-     b.classList.add('open','opened');
-     localStorage.setItem('loreto_advent_'+it.day,'1');
-     audio(it.sound);
-     setTimeout(()=>show(it),520);
-   };
-   cal.appendChild(b);
- });
- const t=todayInfo();
- if(demo) statusEl.textContent='Demo-Modus aktiv: Alle Törchen können geöffnet werden.';
- else if(t.year===2026 && t.month===12 && t.day<=24) statusEl.textContent='Heute ist der '+t.day+'. Dezember. Törchen '+t.day+' ist bereit.';
- else if(t.year===2026 && t.month<12) statusEl.textContent='Der Adventskalender startet am 1. Dezember 2026.';
- else statusEl.textContent='Willkommen beim Adventskalender 2026.';
+  const cal=document.getElementById("calendar");
+  cal.innerHTML="";
+  surprises.forEach(item=>{
+    const btn=document.createElement("button");
+    btn.className="door"+(canOpen(item.day)?"":" locked");
+    if(localStorage.getItem("loreto2026_day_"+item.day)==="1") btn.classList.add("opened");
+    btn.setAttribute("aria-label","Törchen "+item.day);
+    btn.innerHTML=`<div class="inside">${item.icon}</div><div class="panel"><span class="number">${item.day}</span></div>`;
+    btn.addEventListener("click",()=>{
+      if(!canOpen(item.day)){
+        document.getElementById("status").textContent="Dieses Törchen darf erst am "+item.day+". Dezember 2026 geöffnet werden.";
+        playSound("click");
+        return;
+      }
+      btn.classList.add("open","opened");
+      localStorage.setItem("loreto2026_day_"+item.day,"1");
+      playSound(item.sound);
+      setTimeout(()=>openModal(item),520);
+    });
+    cal.appendChild(btn);
+  });
+
+  const t=nowInfo();
+  const s=document.getElementById("status");
+  if(demoMode) s.textContent="Demo-Modus aktiv: Alle Törchen können getestet werden.";
+  else if(t.year===2026 && t.month===12 && t.day<=24) s.textContent="Heute ist der "+t.day+". Dezember. Törchen "+t.day+" ist bereit.";
+  else if(t.year===2026 && t.month<12) s.textContent="Der Adventskalender startet am 1. Dezember 2026.";
+  else s.textContent="Willkommen beim Adventskalender 2026.";
 }
-function show(it){
- document.getElementById('mIcon').textContent=it.icon;
- document.getElementById('mTitle').textContent=it.title;
- document.getElementById('mText').textContent=it.text;
- document.getElementById('mDay').textContent=it.day+'. Dezember 2026';
- modal.classList.add('show');
+
+document.getElementById("close").onclick=()=>document.getElementById("modal").classList.remove("show");
+document.getElementById("modal").onclick=e=>{if(e.target.id==="modal") e.currentTarget.classList.remove("show")};
+document.addEventListener("keydown",e=>{if(e.key==="Escape") document.getElementById("modal").classList.remove("show")});
+
+document.getElementById("demo").onclick=()=>{
+  demoMode=!demoMode;
+  document.getElementById("demo").textContent=demoMode?"Demo beenden":"Demo-Modus";
+  render();
+};
+document.getElementById("reset").onclick=()=>{
+  for(let i=1;i<=24;i++) localStorage.removeItem("loreto2026_day_"+i);
+  render();
+};
+
+function makeSnow(){
+  const wrap=document.getElementById("snow");
+  for(let i=0;i<45;i++){
+    const s=document.createElement("span");
+    s.className="flake";
+    s.textContent=Math.random()>.55?"•":"❄";
+    s.style.left=(Math.random()*100)+"vw";
+    s.style.fontSize=(7+Math.random()*13)+"px";
+    s.style.animationDuration=(8+Math.random()*12)+"s";
+    s.style.animationDelay=(-Math.random()*18)+"s";
+    wrap.appendChild(s);
+  }
 }
-document.getElementById('close').onclick=()=>modal.classList.remove('show');
-modal.onclick=e=>{if(e.target===modal) modal.classList.remove('show')};
-document.addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('show')});
-document.getElementById('demoBtn').onclick=()=>{demo=!demo; render();};
+makeSnow();
 render();
 </script>
 </body>

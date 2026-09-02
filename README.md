@@ -1,24 +1,25 @@
-# Adventskalender Oberstufe Loreto 2026
+# Adventskalender Oberstufe Loreto 2026 – Version 2
 
-GitHub-Pages-Version des Adventskalenders für die Mitarbeitenden der Oberstufe Loreto.
+## Was ist neu?
+- Gestaltung unter dem Motto **«Weihnachten im Loreto»**
+- Schulhaus Loreto als grosses Hintergrundmotiv
+- zusätzliche Loreto-Bildgalerie
+- animierter Schneefall
+- 24 animierte Törchen
+- Datumsfreigabe 1.–24. Dezember 2026
+- Soundeffekte
+- Demo-Modus
+- Speicherung bereits geöffneter Törchen im Browser
 
-## Veröffentlichung mit GitHub Pages
+## GitHub Pages
+1. Alle Dateien dieses Ordners in ein GitHub-Repository hochladen.
+2. GitHub: **Settings → Pages**
+3. **Deploy from a branch**
+4. Branch **main**
+5. Folder **/(root)**
+6. Speichern
 
-1. Auf GitHub ein neues Repository erstellen.
-2. Die Dateien aus dieser ZIP-Datei hochladen.
-3. Unter **Settings → Pages** gehen.
-4. Bei **Build and deployment**:
-   - Source: **Deploy from a branch**
-   - Branch: **main**
-   - Folder: **/(root)**
-5. Speichern.
+## Hinweis zu den Bildern
+Die aktuelle Version lädt öffentlich zugängliche Loreto-Bilder direkt von Bildressourcen der offiziellen Website der Stadtschulen und Betreuung Zug.
 
-Nach kurzer Zeit zeigt GitHub unter **Settings → Pages** die veröffentlichte Adresse an.
-
-## Dateien
-
-- `index.html` – komplette Adventskalender-App
-- `.nojekyll` – verhindert unnötige Jekyll-Verarbeitung
-- `README.md` – diese Anleitung
-
-Die App benötigt aktuell keine weiteren Dateien und funktioniert ohne externe Abhängigkeiten.
+Für die definitive Veröffentlichung empfiehlt es sich, eigene bzw. intern freigegebene Loreto-Fotos als lokale Dateien in das Projekt aufzunehmen. Dadurch ist die App unabhängig von externen Bildlinks und die Bildfreigabe kann intern sauber geregelt werden.
