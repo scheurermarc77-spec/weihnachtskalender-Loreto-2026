@@ -1,0 +1,9 @@
+{
+  "name": "Advent im Loreto 2026",
+  "short_name": "Loreto Advent",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#132c3a",
+  "theme_color": "#132c3a",
+  "description": "Adventskalender für die Mitarbeitenden der Oberstufe Loreto 2026"
+}
