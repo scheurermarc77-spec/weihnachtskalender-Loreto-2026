@@ -1,31 +1,33 @@
-# Adventskalender Oberstufe Loreto 2026 – Version 4
+# Adventskalender Oberstufe Loreto 2026 – Version 5
 
-## Umgesetzt
-- Das Loreto-Foto füllt den ganzen Bildschirm.
-- 24 Törchen liegen direkt auf dem Schulhausbild.
-- Die Törchen sind bewusst unterschiedlich gross und unterschiedlich gestaltet.
-- Die Positionen sind auf die sichtbaren Gebäudeflächen und den Vorplatz abgestimmt.
-- Beim Öffnen klappt das Törchen auf, es erscheinen kleine Lichtfunken und danach öffnet sich ein separates Überraschungsfenster.
-- Soundeffekte sind integriert.
-- Demo-Modus und Datumsfreigabe 1.–24. Dezember 2026 sind enthalten.
+## Neu in dieser Version
+- Dein hochgeladenes Loreto-Foto ist direkt lokal im Projekt eingebaut.
+- Es werden keine externen Bildlinks mehr benötigt.
+- Das Foto füllt den ganzen Bildschirm.
+- 24 unterschiedlich grosse Törchen sind direkt auf dem Bild verteilt.
+- Beim Öffnen klappt das Törchen auf und anschliessend öffnet sich ein separates Fenster mit der Überraschung.
+- Soundeffekte, Demo-Modus und Datumsfreigabe 1.–24. Dezember 2026 bleiben erhalten.
 - Bereits geöffnete Törchen werden im Browser gespeichert.
-- Die App besitzt einen Service Worker und versucht das Loreto-Foto nach dem ersten Laden offline zu cachen.
-- Über **Eigenes Loreto-Foto** kann auf dem Windows-Rechner ein lokales, intern freigegebenes Foto gewählt werden. Dieses wird im Browser gespeichert und ersetzt das Online-Bild.
+- Die App funktioniert über GitHub Pages und kann dank Service Worker auch offline zwischengespeichert werden.
 
-## Bildquelle
-Aktuell verwendetes öffentlich zugängliches Loreto-Foto:
-Stadtschulen und Betreuung Zug, Fotoalbum «50 Jahre Loreto».
-
-Die definitive öffentliche Verwendung bzw. Weiterverwendung des Fotos sollte intern bezüglich Bildrechten geprüft werden.
-Ein eigenes freigegebenes Foto kann in der App direkt über **Eigenes Loreto-Foto** ausgewählt werden.
+## Dateien
+- index.html
+- sw.js
+- manifest.webmanifest
+- assets/loreto_hintergrund.png
+- .nojekyll
 
 ## GitHub Pages
-1. Dateien aus der ZIP in ein GitHub-Repository hochladen.
-2. **Settings → Pages**
-3. **Deploy from a branch**
-4. Branch **main**
-5. Folder **/(root)**
-6. Speichern.
+1. ZIP entpacken
+2. Alle Dateien und Ordner in ein GitHub-Repository hochladen
+3. In GitHub: Settings → Pages
+4. Deploy from a branch
+5. Branch: main
+6. Folder: /(root)
+7. Speichern
 
-## Hinweis zu Offline
-Beim ersten Aufruf über GitHub Pages braucht die App Internetzugang, damit das Standard-Loreto-Foto geladen und gecacht werden kann. Danach kann der Browser es in der Regel aus dem Cache verwenden.
+## Hinweis
+Wenn du willst, kann ich im nächsten Schritt noch
+- die Überraschungen inhaltlich personalisieren,
+- zusätzliche Bilder oder Videos hinter einzelnen Törchen einbauen,
+- oder dir die Törchen farblich noch stärker ans Loreto anpassen.
