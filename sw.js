@@ -1,5 +1,5 @@
-const CACHE="loreto-advent-v5";
-const CORE=["./","./index.html","./manifest.webmanifest","./assets/loreto_hintergrund.png"];
+const CACHE="loreto-advent-v6";
+const CORE=["./","./index.html","./manifest.webmanifest","./assets/loreto_hintergrund.jpeg"];
 
 self.addEventListener("install", event => {
   event.waitUntil(
